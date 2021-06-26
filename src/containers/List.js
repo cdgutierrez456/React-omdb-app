@@ -9,7 +9,9 @@ class List extends React.Component {
     constructor() {
         super();
         this.state = {
-            data: []
+            data: [],
+            searchTerm: '',
+            error: ''
         }
     }
 
@@ -20,9 +22,16 @@ class List extends React.Component {
         this.setState({ data: resJSON.Search });
     }
 
-    handleSubmit(e) {
+    async handleSubmit(e) {
         e.preventDefault();
-        console.log('Enviando...')
+        if(!this.state.searchTerm) {
+            return this.setState({error: 'Please write a valid text'});
+        }
+
+        const res = await fetch(`${API}&s=${this.state.searchTerm}`);
+        const data = await res.json();
+        this.setState({data: data.Search});
+
     }
 
     render() {
@@ -36,9 +45,12 @@ class List extends React.Component {
                             id=""
                             className="form-control"
                             placeholder='Search'
-                            onChange={e => console.log(e.target.value)}
+                            onChange={e => this.setState({searchTerm: e.target.value})}
                             autoFocus/>
                         </form>
+                        <p className='text-white'>
+                            {this.state.error ? this.state.error: ''}
+                        </p>
                     </div>
                 </div>
                 <div className='row'>
