@@ -4,14 +4,25 @@ import Card from '../components/Card/Card'
 
 class List extends React.Component {
 
+    constructor() {
+        super();
+        this.state = {
+            data: []
+        }
+    }
+
     async componentDidMount() {
         const res = await fetch('../../assets/data.json')
         const resJSON = await res.json()
-        console.log(resJSON)
+        this.setState({data: resJSON})
     }
 
     render() {
-        return <h1>List</h1>
+        return this.state.data.map(movies => {
+            return <div>
+                <h1>{movies.Title}</h1>
+            </div>
+        })
     }
 
 }
