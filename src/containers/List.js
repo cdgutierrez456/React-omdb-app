@@ -18,10 +18,8 @@ class List extends React.Component {
     }
 
     render() {
-        return this.state.data.map(movies => {
-            return <div>
-                <h1>{movies.Title}</h1>
-            </div>
+        return this.state.data.map(movie => {
+            return <Card movie={movie}/>
         })
     }
 
