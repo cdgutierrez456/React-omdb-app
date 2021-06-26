@@ -14,13 +14,19 @@ class List extends React.Component {
     async componentDidMount() {
         const res = await fetch('../../assets/data.json')
         const resJSON = await res.json()
-        this.setState({data: resJSON})
+        this.setState({ data: resJSON })
     }
 
     render() {
-        return this.state.data.map(movie => {
-            return <Card movie={movie}/>
-        })
+        return (
+            <div className='row'>
+                {
+                    this.state.data.map(movie => {
+                        return <Card movie={movie} />
+                    })
+                }
+            </div>
+        )
     }
 
 }
