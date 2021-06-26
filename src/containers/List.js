@@ -2,6 +2,8 @@ import React from 'react';
 
 import Card from '../components/Card/Card'
 
+const API = 'http://www.omdbapi.com/?i=tt3896198&apikey=509b9805';
+
 class List extends React.Component {
 
     constructor() {
@@ -12,9 +14,11 @@ class List extends React.Component {
     }
 
     async componentDidMount() {
-        const res = await fetch('../../assets/data.json')
-        const resJSON = await res.json()
-        this.setState({ data: resJSON })
+        // const res = await fetch('../../assets/data.json')
+        const res = await fetch(`${API}&s=batman`);
+        const resJSON = await res.json();
+        console.log(resJSON)
+        // this.setState({ data: resJSON });
     }
 
     render() {
