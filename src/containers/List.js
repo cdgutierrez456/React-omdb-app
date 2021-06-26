@@ -30,7 +30,11 @@ class List extends React.Component {
 
         const res = await fetch(`${API}&s=${this.state.searchTerm}`);
         const data = await res.json();
-        this.setState({data: data.Search});
+
+        if(!data.Search) {
+            return this.setState({error: 'There are no results'});
+        }
+        this.setState({data: data.Search, error: '', searchTerm: ''});
 
     }
 
@@ -46,6 +50,7 @@ class List extends React.Component {
                             className="form-control"
                             placeholder='Search'
                             onChange={e => this.setState({searchTerm: e.target.value})}
+                            value = {this.state.searchTerm}
                             autoFocus/>
                         </form>
                         <p className='text-white'>
@@ -55,8 +60,8 @@ class List extends React.Component {
                 </div>
                 <div className='row'>
                     {
-                        this.state.data.map(movie => {
-                            return <Card movie={movie} />
+                        this.state.data.map((movie, i) => {
+                            return <Card movie={movie} key={i} />
                         })
                     }
                 </div>
